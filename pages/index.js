@@ -13,7 +13,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Hello there, welcome to <a href="https://nextjs.org">Next.js!</a>
+          Hello there, welcome to Next.js!
         </h1>
 
         <p className={styles.description}>
@@ -21,10 +21,19 @@ export default function Home() {
           <code className={styles.code}>pages/index.js</code>
         </p>
 
-        <h1 className={styles.title}>
+        <h1 style={{ fontSize: '20px' }} className={styles.title}>
           <Link href="/threejs">
             <a>Three JS</a>
-          </Link>
+          </Link>{' - '}
+          <Link href="/controls">
+            <a>Controls</a>
+          </Link>{' - '}
+          <Link href="/image">
+            <a>Images</a>
+          </Link>{' - '}
+          <Link href="/loadmodel">
+            <a>Load Model</a>
+          </Link>{' - '}
         </h1>
 
         <div className={styles.grid}>

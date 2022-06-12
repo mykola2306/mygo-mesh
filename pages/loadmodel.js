@@ -1,11 +1,36 @@
 import Head from "next/head";
 import Link from 'next/link'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+
+// Loaders
+import { useLoader } from '@react-three/fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+
+import GoBackButton from "../src/components/GoBackButton/GoBackButton";
 
 import styles from "../styles/Home.module.css";
 
-export default function ThreeJS() {
+// LOADER
+import { Html, useProgress } from '@react-three/drei'
+function Loader() {
+  const { progress } = useProgress()
+  return <Html center>{progress} % loaded</Html>
+}
+// LOADER
+
+const Model = () => {
+  // const gltf = useLoader(GLTFLoader, "./Finished_Scene.glb");
+  const gltf = useLoader(GLTFLoader, "./scenes/Finished_Scene.glb");
+  return (
+    <>
+      <primitive object={gltf.scene} scale={0.4} />
+    </>
+  );
+};
+
+export default function LoadModel() {
   return (
     <div className={styles.container}>
       <Head>
@@ -14,19 +39,18 @@ export default function ThreeJS() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Testing Three JS{" - "}
-          <Link href="/">
-            <a>Home</a>
-          </Link>
-        </h1>
-      </main>
-      <Canvas>
+      <GoBackButton />
+
+      <Canvas camera={{ position: [0, 2, 6] }}>
+        <Suspense fallback={<Loader />}>
+          <Model />
+        </Suspense>
+        {/* <Model /> */}
+        <OrbitControls />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
-        <Box position={[-1.2, 0, 0]} />
-        <Box position={[1.2, 0, 0]} />
+        <Box position={[-1.2, -1, 0]} />
+        <Box position={[1.2, -1, 0]} />
       </Canvas>
     </div>
   );
@@ -55,7 +79,7 @@ function Box(props) {
       onPointerOver={(event) => setHover(true)}
       onPointerOut={(event) => setHover(false)}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+      <meshStandardMaterial color={hovered ? 'hotpink' : 'green'} />
     </mesh>
   )
 }

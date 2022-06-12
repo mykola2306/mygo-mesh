@@ -2,10 +2,13 @@ import Head from "next/head";
 import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+
+import GoBackButton from "../src/components/GoBackButton/GoBackButton";
 
 import styles from "../styles/Home.module.css";
 
-export default function ThreeJS() {
+export default function Controls() {
   return (
     <div className={styles.container}>
       <Head>
@@ -14,15 +17,10 @@ export default function ThreeJS() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Testing Three JS{" - "}
-          <Link href="/">
-            <a>Home</a>
-          </Link>
-        </h1>
-      </main>
+      <GoBackButton />
+
       <Canvas>
+        <OrbitControls />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         <Box position={[-1.2, 0, 0]} />
@@ -55,7 +53,7 @@ function Box(props) {
       onPointerOver={(event) => setHover(true)}
       onPointerOut={(event) => setHover(false)}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+      <meshStandardMaterial color={hovered ? 'hotpink' : 'green'} />
     </mesh>
   )
 }
